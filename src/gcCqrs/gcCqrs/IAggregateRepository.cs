@@ -9,5 +9,6 @@ namespace GeniusCode.Cqrs
     {
         TAggregate GetAggregateByKey(Guid key);
         void SaveAggregate(TAggregate aggregate);
+        TAggregate CreateEmptyAggregate();
     }
 }
