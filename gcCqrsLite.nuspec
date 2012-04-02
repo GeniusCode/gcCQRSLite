@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>gcCqrsLite</id>
+    <version>1.0</version>
+    <title>Basic Cqrs library</title>
+    <authors>GeniusCode</authors>
+    <owners>JeremiahRedekop RyanHatch</owners>
+    <projectUrl>https://github.com/GeniusCode/gcCQRSLite</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Basic cqrs library
+	</description>
+    <summary>basic cqrs library</summary>
+    <tags>cqrs</tags>
+  </metadata>
+  <files>
+    <file src="src\gcCqrs\gcCqrs\bin\*.dll" target="lib\net35" />
+	<file src="src\gcCqrs\gcCqrs\bin\*.dll" target="lib\net40" />
+  </files>
+</package>
