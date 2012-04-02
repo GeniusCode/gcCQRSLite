@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeniusCode.Cqrs.Commands
+namespace GeniusCode.Cqrs
 {
     public class CommandHandlerNotFoundException : Exception
     {

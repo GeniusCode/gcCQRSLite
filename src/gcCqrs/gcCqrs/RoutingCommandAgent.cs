@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace GeniusCode.Cqrs.Commands
+namespace GeniusCode.Cqrs
 {
     public class RoutingCommandAgent : ICommandAgent
     {
@@ -20,7 +20,7 @@ namespace GeniusCode.Cqrs.Commands
         {
         }
 
-        public CommandResult SendCommandEnvelope(DomainCommandEnvelope command)
+        public ICommandResult SendCommandEnvelope(DomainCommandEnvelope command)
         {
             OnBeforeRouteCommand(command);
 

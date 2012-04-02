@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace GeniusCode.Cqrs.Commands
+namespace GeniusCode.Cqrs
 {
     public abstract class CommandHandler<T> : ICommandHandler, ICommandHandler<T> where T : IDomainCommand
     {
@@ -8,7 +8,8 @@ namespace GeniusCode.Cqrs.Commands
         {
             return true;
         }
-        protected abstract CommandResult PerformExecute(T command);
+        
+        protected abstract ICommandResult PerformExecute(T command);
 
 
         bool ICommandHandler.CanExecute(IDomainCommand command)
@@ -19,12 +20,12 @@ namespace GeniusCode.Cqrs.Commands
             return false;
         }
 
-        CommandResult ICommandHandler.Execute(IDomainCommand command)
+        ICommandResult ICommandHandler.Execute(IDomainCommand command)
         {
             return PerformExecute((T)command);
         }
 
-        public CommandResult Execute(T command)
+        public ICommandResult Execute(T command)
         {
             return PerformExecute(command);
         }
