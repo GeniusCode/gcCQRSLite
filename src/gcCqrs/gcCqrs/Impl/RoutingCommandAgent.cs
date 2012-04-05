@@ -25,10 +25,14 @@ namespace GeniusCode.Cqrs
         {
             OnBeforeRouteCommand(command);
             var itemsToExecute = _handlers.Where(t => t.CanExecute(command.Command)).ToList();
-            var toExecute = itemsToExecute.SingleOrDefault();
+            var toExecuteCheck = itemsToExecute.ToList();
 
-            if (toExecute == null)
-                throw new CommandHandlerNotFoundException(command.Command, _handlers, itemsToExecute);
+            if (!toExecuteCheck.Any())
+                throw new CommandHandlerNotFoundException(command.Command, _handlers);
+            if(toExecuteCheck.Count > 1)
+                throw new MultipleDomainCommandHandlersFoundException(command.Command,_handlers, toExecuteCheck);
+
+            var toExecute = toExecuteCheck.Single();
 
             OnBeforeExecuteCommandHandler(toExecute,command.Command);
             return toExecute.Execute(command.Command);
