@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GeniusCode.Cqrs.Support;
 
 namespace GeniusCode.Cqrs
 {
     public class RoutingCommandAgent : ICommandAgent
     {
-        private readonly IEnumerable<ICommandHandler> _handlers;
+        private readonly List<ICommandHandler> _handlers;
 
         public RoutingCommandAgent(IEnumerable<ICommandHandler> handlers)
         {
-            _handlers = handlers;
+            _handlers = handlers.ToList();
         }
 
         protected virtual void OnBeforeRouteCommand(DomainCommandEnvelope command)
@@ -23,15 +24,11 @@ namespace GeniusCode.Cqrs
         public ICommandResult SendCommandEnvelope(DomainCommandEnvelope command)
         {
             OnBeforeRouteCommand(command);
-
-            var toExecuteItems = (from t in _handlers.ToList()
-                                  where t.CanExecute(command.Command)
-                                  select t).ToList();
-
-            var toExecute = toExecuteItems.SingleOrDefault();
+            var itemsToExecute = _handlers.Where(t => t.CanExecute(command.Command)).ToList();
+            var toExecute = itemsToExecute.SingleOrDefault();
 
             if (toExecute == null)
-                throw new CommandHandlerNotFoundException(command.Command, _handlers, toExecuteItems);
+                throw new CommandHandlerNotFoundException(command.Command, _handlers, itemsToExecute);
 
             OnBeforeExecuteCommandHandler(toExecute,command.Command);
             return toExecute.Execute(command.Command);
